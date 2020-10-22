@@ -269,9 +269,22 @@ namespace FileExplorer
                         {
                             if (File.Exists(name))
                             {
-                                //File.Delete(toDel);
-                                MessageBox.Show("File removing is disabled", "Disabled operation",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                var res = MessageBox.Show($"You sure you want remove file {name}", "FILE REMOVING",
+                                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                                if (res == DialogResult.OK)
+                                {
+                                    try
+                                    {
+                                        File.Delete(name);
+                                        MessageBox.Show($"File {name} removed", "FILE DELETED",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                    catch (Exception exception)
+                                    {
+                                        Console.WriteLine(exception);
+                                        throw;
+                                    }
+                                }
                             }
                             else
                             {
@@ -281,9 +294,12 @@ namespace FileExplorer
                                 }
                                 catch
                                 {
-                                    MessageBox.Show("Removing not empty directories in disabled", "Disabled operation",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    var res = MessageBox.Show($"You sure you want remove not empty directory {name}", "FOLDER REMOVING",
+                                        MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                                    if (res == DialogResult.OK) Directory.Delete(name,true);
                                 }
+                                MessageBox.Show($"Folder {name} removed", "FOLDER REMOVED",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                         }
                         Refresh();
