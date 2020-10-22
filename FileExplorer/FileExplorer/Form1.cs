@@ -226,7 +226,7 @@ namespace FileExplorer
                         foreach (string name in FromExplorer.CheckedItems)
                         {
                             string from;
-                            if (ToPath.Text.EndsWith("\\"))
+                            if (FromPath.Text.EndsWith("\\"))
                                 from = FromPath.Text + name;
                             else
                                 from = FromPath.Text + '\\' + name;
@@ -244,7 +244,7 @@ namespace FileExplorer
                                 return;
                             }
 
-                            if (File.Exists(name))
+                            if (File.Exists(from))
                             {
                                 File.Copy(from,to);
                             }
@@ -377,6 +377,8 @@ namespace FileExplorer
             }
             else
             {
+                CreateName.Visible = false;
+                CreateName.Enabled = false;
                 FileOrFolder.Visible = false;
                 FileOrFolder.Enabled = false;
             }
