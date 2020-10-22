@@ -28,6 +28,7 @@ namespace FileExplorer
             LeftDrive.Items.AddRange(drives);
             RightDrive.Items.AddRange(drives);
 
+            WindowResized(this,null);
         }
 
         private void Open(CheckedListBox obj, string path)
@@ -420,6 +421,31 @@ namespace FileExplorer
         {
             if((sender as ComboBox).Enabled)
                 FileOrFolder_SelectedIndexChanged(sender,e);
+        }
+
+        private void WindowResized(object sender, EventArgs e)
+        {
+            LeftExplorer.Width = (int)(this.Size.Width / 2 - 100);
+            RightExplorer.Width = (int)(this.Size.Width / 2 - 100);
+            LeftExplorer.Height = this.Size.Height - 150;
+            RightExplorer.Height = this.Size.Height - 150;
+            int x = 40;
+            LeftExplorer.Left = x;
+            RightExplorer.Left = this.Size.Width - x - 16 - RightExplorer.Width;
+            button_left.Left = (int)(this.Size.Width / 2 - button_left.Width / 2 - 8);
+            button_right.Left = (int)(this.Size.Width / 2 - button_right.Width / 2 - 8);
+            action.Left = (int)(this.Size.Width / 2 - action.Width / 2 - 8);
+            CreateName.Left = (int)(this.Size.Width / 2 - CreateName.Width / 2 - 8);
+            FileOrFolder.Left = (int)(this.Size.Width / 2 - FileOrFolder.Width / 2 - 8);
+            LeftExit.Left = LeftExplorer.Left;
+            RightExit.Left = RightExplorer.Left;
+            LeftPath.Left = LeftExplorer.Left + 20;
+            RightPath.Left = RightExplorer.Left + 20;
+            LeftPath.Width = LeftExplorer.Width - 20;
+            RightPath.Width = LeftExplorer.Width - 20;
+            LeftDrive.Left = LeftExplorer.Left + LeftExplorer.Width - LeftDrive.Width;
+            RightDrive.Left = RightExplorer.Left + RightExplorer.Width - RightDrive.Width;
+
         }
     }
 }

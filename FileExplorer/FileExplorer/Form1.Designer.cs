@@ -45,6 +45,7 @@
             // 
             // LeftDrive
             // 
+            this.LeftDrive.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.LeftDrive.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.LeftDrive.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.LeftDrive.FormattingEnabled = true;
@@ -57,11 +58,12 @@
             // 
             // LeftExplorer
             // 
+            this.LeftExplorer.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.LeftExplorer.CheckOnClick = true;
             this.LeftExplorer.FormattingEnabled = true;
-            this.LeftExplorer.Location = new System.Drawing.Point(42, 93);
+            this.LeftExplorer.Location = new System.Drawing.Point(10, 90);
             this.LeftExplorer.Name = "LeftExplorer";
-            this.LeftExplorer.Size = new System.Drawing.Size(293, 319);
+            this.LeftExplorer.Size = new System.Drawing.Size(300, 289);
             this.LeftExplorer.TabIndex = 2;
             this.LeftExplorer.ThreeDCheckBoxes = true;
             this.LeftExplorer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CheckBySquare);
@@ -70,10 +72,11 @@
             // 
             // RightDrive
             // 
+            this.RightDrive.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RightDrive.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.RightDrive.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.RightDrive.FormattingEnabled = true;
-            this.RightDrive.Location = new System.Drawing.Point(663, 40);
+            this.RightDrive.Location = new System.Drawing.Point(633, 40);
             this.RightDrive.Name = "RightDrive";
             this.RightDrive.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.RightDrive.Size = new System.Drawing.Size(86, 21);
@@ -83,11 +86,12 @@
             // 
             // RightExplorer
             // 
+            this.RightExplorer.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RightExplorer.CheckOnClick = true;
             this.RightExplorer.FormattingEnabled = true;
-            this.RightExplorer.Location = new System.Drawing.Point(456, 93);
+            this.RightExplorer.Location = new System.Drawing.Point(613, 90);
             this.RightExplorer.Name = "RightExplorer";
-            this.RightExplorer.Size = new System.Drawing.Size(293, 319);
+            this.RightExplorer.Size = new System.Drawing.Size(300, 289);
             this.RightExplorer.TabIndex = 3;
             this.RightExplorer.ThreeDCheckBoxes = true;
             this.RightExplorer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.CheckBySquare);
@@ -96,6 +100,7 @@
             // 
             // action
             // 
+            this.action.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.action.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.action.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.action.FormattingEnabled = true;
@@ -104,7 +109,7 @@
             "MOVE",
             "CREATE",
             "DELETE"});
-            this.action.Location = new System.Drawing.Point(358, 135);
+            this.action.Location = new System.Drawing.Point(328, 137);
             this.action.Name = "action";
             this.action.Size = new System.Drawing.Size(72, 21);
             this.action.TabIndex = 4;
@@ -112,7 +117,8 @@
             // 
             // button_left
             // 
-            this.button_left.Location = new System.Drawing.Point(358, 183);
+            this.button_left.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button_left.Location = new System.Drawing.Point(328, 185);
             this.button_left.Name = "button_left";
             this.button_left.Size = new System.Drawing.Size(75, 23);
             this.button_left.TabIndex = 5;
@@ -122,7 +128,8 @@
             // 
             // button_right
             // 
-            this.button_right.Location = new System.Drawing.Point(358, 233);
+            this.button_right.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button_right.Location = new System.Drawing.Point(328, 235);
             this.button_right.Name = "button_right";
             this.button_right.Size = new System.Drawing.Size(75, 23);
             this.button_right.TabIndex = 6;
@@ -132,10 +139,11 @@
             // 
             // LeftPath
             // 
+            this.LeftPath.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.LeftPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.LeftPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.LeftPath.FormattingEnabled = true;
-            this.LeftPath.Location = new System.Drawing.Point(64, 66);
+            this.LeftPath.Location = new System.Drawing.Point(34, 66);
             this.LeftPath.Name = "LeftPath";
             this.LeftPath.Size = new System.Drawing.Size(271, 21);
             this.LeftPath.TabIndex = 7;
@@ -145,6 +153,7 @@
             // 
             // LeftExit
             // 
+            this.LeftExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.LeftExit.ImageKey = "(none)";
             this.LeftExit.Location = new System.Drawing.Point(42, 66);
             this.LeftExit.Name = "LeftExit";
@@ -156,10 +165,11 @@
             // 
             // RightPath
             // 
+            this.RightPath.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RightPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.RightPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.RightPath.FormattingEnabled = true;
-            this.RightPath.Location = new System.Drawing.Point(478, 67);
+            this.RightPath.Location = new System.Drawing.Point(448, 67);
             this.RightPath.Name = "RightPath";
             this.RightPath.Size = new System.Drawing.Size(271, 21);
             this.RightPath.TabIndex = 9;
@@ -168,6 +178,7 @@
             // 
             // RightExit
             // 
+            this.RightExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.RightExit.ImageKey = "(none)";
             this.RightExit.Location = new System.Drawing.Point(456, 67);
             this.RightExit.Name = "RightExit";
@@ -179,8 +190,9 @@
             // 
             // CreateName
             // 
+            this.CreateName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.CreateName.Enabled = false;
-            this.CreateName.Location = new System.Drawing.Point(358, 304);
+            this.CreateName.Location = new System.Drawing.Point(328, 306);
             this.CreateName.Name = "CreateName";
             this.CreateName.Size = new System.Drawing.Size(75, 20);
             this.CreateName.TabIndex = 11;
@@ -189,12 +201,13 @@
             // 
             // FileOrFolder
             // 
+            this.FileOrFolder.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.FileOrFolder.Enabled = false;
             this.FileOrFolder.FormattingEnabled = true;
             this.FileOrFolder.Items.AddRange(new object[] {
             "Folder",
             "File"});
-            this.FileOrFolder.Location = new System.Drawing.Point(358, 272);
+            this.FileOrFolder.Location = new System.Drawing.Point(328, 274);
             this.FileOrFolder.Name = "FileOrFolder";
             this.FileOrFolder.Size = new System.Drawing.Size(75, 21);
             this.FileOrFolder.TabIndex = 12;
@@ -206,7 +219,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(925, 464);
             this.Controls.Add(this.FileOrFolder);
             this.Controls.Add(this.CreateName);
             this.Controls.Add(this.RightExit);
@@ -222,6 +235,7 @@
             this.Controls.Add(this.LeftDrive);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Resize += new System.EventHandler(this.WindowResized);
             this.ResumeLayout(false);
             this.PerformLayout();
 
