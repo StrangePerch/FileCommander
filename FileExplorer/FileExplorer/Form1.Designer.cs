@@ -200,6 +200,7 @@
             this.FileOrFolder.TabIndex = 12;
             this.FileOrFolder.Visible = false;
             this.FileOrFolder.SelectedIndexChanged += new System.EventHandler(this.FileOrFolder_SelectedIndexChanged);
+            this.FileOrFolder.EnabledChanged += new System.EventHandler(this.FileOrFolder_EnabledChanged);
             // 
             // Form1
             // 

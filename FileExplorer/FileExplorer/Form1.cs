@@ -167,190 +167,191 @@ namespace FileExplorer
 
         private void Action(object sender, EventArgs e)
         {
-            CheckedListBox FromExplorer;
-            CheckedListBox ToExplorer;
-            ComboBox FromPath;
-            ComboBox ToPath;
-            if ((sender as Button) == button_left)
+            try
             {
-                FromExplorer = RightExplorer;
-                ToExplorer = LeftExplorer;
-                FromPath = RightPath;
-                ToPath = LeftPath;
-            }
-            else
-            {
-                FromExplorer = LeftExplorer;
-                ToExplorer = RightExplorer;
-                FromPath = LeftPath;
-                ToPath = RightPath;
-            }
-            if (action.SelectedIndex != -1)
-            {
-                switch (action.SelectedItem)
+                CheckedListBox FromExplorer;
+                CheckedListBox ToExplorer;
+                ComboBox FromPath;
+                ComboBox ToPath;
+                if ((sender as Button) == button_left)
                 {
-                    case "MOVE":
-                        foreach (string name in FromExplorer.CheckedItems)
-                        {
-                            string from;
-                            if (ToPath.Text.EndsWith("\\"))
-                                from = FromPath.Text + name;
-                            else
-                                from = FromPath.Text + '\\' + name;
-
-                            string to;
-                            if (ToPath.Text.EndsWith("\\"))
-                                to = ToPath.Text + name;
-                            else
-                                to = ToPath.Text + '\\' + name;
-
-                            if (from == to)
+                    FromExplorer = RightExplorer;
+                    ToExplorer = LeftExplorer;
+                    FromPath = RightPath;
+                    ToPath = LeftPath;
+                }
+                else
+                {
+                    FromExplorer = LeftExplorer;
+                    ToExplorer = RightExplorer;
+                    FromPath = LeftPath;
+                    ToPath = RightPath;
+                }
+                if (action.SelectedIndex != -1)
+                {
+                    switch (action.SelectedItem)
+                    {
+                        case "MOVE":
+                            foreach (string name in FromExplorer.CheckedItems)
                             {
-                                MessageBox.Show("Source and destination is same", "Senseless operation",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                return;
-                            }
+                                string from;
+                                if (ToPath.Text.EndsWith("\\"))
+                                    from = FromPath.Text + name;
+                                else
+                                    from = FromPath.Text + '\\' + name;
 
-                            if (File.Exists(name))
-                            {
-                                File.Move(from, to);
-                            }
-                            else
-                            {
-                                Directory.Move(from, to);
-                            }
-                        }
-                        Refresh();
-                        break;
-                    case "COPY":
-                        foreach (string name in FromExplorer.CheckedItems)
-                        {
-                            string from;
-                            if (FromPath.Text.EndsWith("\\"))
-                                from = FromPath.Text + name;
-                            else
-                                from = FromPath.Text + '\\' + name;
+                                string to;
+                                if (ToPath.Text.EndsWith("\\"))
+                                    to = ToPath.Text + name;
+                                else
+                                    to = ToPath.Text + '\\' + name;
 
-                            string to;
-                            if (ToPath.Text.EndsWith("\\"))
-                                to = ToPath.Text + name;
-                            else
-                                to = ToPath.Text + '\\' + name;
-
-                            if (from == to)
-                            {
-                                MessageBox.Show("Source and destination is same", "Senseless operation",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                return;
-                            }
-
-                            if (File.Exists(from))
-                            {
-                                File.Copy(from,to);
-                            }
-                            else
-                            {
-                                DirectoryCopy(from, to, true);
-                            }
-                        }
-                        Refresh();
-                        break;
-                    case "DELETE":
-                        List<string> toDel = new List<string>();
-                        foreach (string name in ToExplorer.CheckedItems)
-                        {
-                            if (ToPath.Text.EndsWith("\\"))
-                                toDel.Add(ToPath.Text + name);
-                            else
-                                toDel.Add(ToPath.Text + '\\' + name);
-                        }
-
-                        foreach (var name in toDel)
-                        {
-                            if (File.Exists(name))
-                            {
-                                var res = MessageBox.Show($"You sure you want remove file {name}", "FILE REMOVING",
-                                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                                if (res == DialogResult.OK)
+                                if (from == to)
                                 {
-                                    try
+                                    MessageBox.Show("Source and destination is same", "Senseless operation",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    return;
+                                }
+
+                                if (File.Exists(name))
+                                {
+                                    File.Move(from, to);
+                                }
+                                else
+                                {
+                                    Directory.Move(from, to);
+                                }
+                            }
+                            Refresh();
+                            break;
+                        case "COPY":
+                            foreach (string name in FromExplorer.CheckedItems)
+                            {
+                                string from;
+                                if (FromPath.Text.EndsWith("\\"))
+                                    from = FromPath.Text + name;
+                                else
+                                    from = FromPath.Text + '\\' + name;
+
+                                string to;
+                                if (ToPath.Text.EndsWith("\\"))
+                                    to = ToPath.Text + name;
+                                else
+                                    to = ToPath.Text + '\\' + name;
+
+                                if (from == to)
+                                {
+                                    MessageBox.Show("Source and destination is same", "Senseless operation",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    return;
+                                }
+
+                                if (File.Exists(from))
+                                {
+                                    File.Copy(from, to);
+                                }
+                                else
+                                {
+                                    DirectoryCopy(from, to, true);
+                                }
+                            }
+                            Refresh();
+                            break;
+                        case "DELETE":
+                            List<string> toDel = new List<string>();
+                            foreach (string name in ToExplorer.CheckedItems)
+                            {
+                                if (ToPath.Text.EndsWith("\\"))
+                                    toDel.Add(ToPath.Text + name);
+                                else
+                                    toDel.Add(ToPath.Text + '\\' + name);
+                            }
+
+                            foreach (var name in toDel)
+                            {
+                                if (File.Exists(name))
+                                {
+                                    var res = MessageBox.Show($"You sure you want remove file {name}", "FILE REMOVING",
+                                        MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                                    if (res == DialogResult.OK)
                                     {
+
                                         File.Delete(name);
                                         MessageBox.Show($"File {name} removed", "FILE DELETED",
                                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     }
-                                    catch (Exception exception)
-                                    {
-                                        Console.WriteLine(exception);
-                                        throw;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                try
-                                {
-                                    Directory.Delete(name);
-                                }
-                                catch
-                                {
-                                    var res = MessageBox.Show($"You sure you want remove not empty directory {name}", "FOLDER REMOVING",
-                                        MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                                    if (res == DialogResult.OK) Directory.Delete(name,true);
-                                }
-                                MessageBox.Show($"Folder {name} removed", "FOLDER REMOVED",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
-                        Refresh();
-                        break;
-                    case "CREATE":
-
-                        string path;
-
-                        if (ToPath.Text.EndsWith("\\"))
-                            path = ToPath.Text + CreateName.Text;
-                        else
-                            path = ToPath.Text + '\\' + CreateName.Text;
-                        if (FileOrFolder.Text == "Folder" && !Directory.Exists(path))
-                        {
-                            Directory.CreateDirectory(path);
-                        }
-                        else if (FileOrFolder.Text == "File" && !File.Exists(path))
-                        {
-                            var my_file = File.Create(path);
-                            my_file.Close();
-                        }
-                        else
-                        {
-                            MessageBox.Show("NAME IS TAKEN", "",
-                                MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            int i = 1;
-                            string temp = CreateName.Text;
-                            while (true)
-                            {
-                                if (FileOrFolder.Text == "Folder")
-                                {
-                                    CreateName.Text = temp + i;
                                 }
                                 else
                                 {
-                                    CreateName.Text = temp.Insert(temp.LastIndexOf("."), i.ToString());
+                                    try
+                                    {
+                                        Directory.Delete(name);
+                                    }
+                                    catch
+                                    {
+                                        var res = MessageBox.Show($"You sure you want remove not empty directory {name}", "FOLDER REMOVING",
+                                            MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                                        if (res == DialogResult.OK) Directory.Delete(name, true);
+                                    }
+                                    MessageBox.Show($"Folder {name} removed", "FOLDER REMOVED",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
-
-                                if (ToPath.Text.EndsWith("\\")) path = ToPath.Text + CreateName.Text;
-                                else path = ToPath.Text + '\\' + CreateName.Text;
-                                if(FileOrFolder.Text == "Folder" && !Directory.Exists(path)) return;
-                                else if (FileOrFolder.Text == "File" && !File.Exists(path)) return;
-                                
-                                i++;
                             }
-                        }
-                        Refresh();
-                        ToExplorer.SetSelected(ToExplorer.FindString(CreateName.Text),true);
-                        break;
+                            Refresh();
+                            break;
+                        case "CREATE":
+
+                            string path;
+
+                            if (ToPath.Text.EndsWith("\\"))
+                                path = ToPath.Text + CreateName.Text;
+                            else
+                                path = ToPath.Text + '\\' + CreateName.Text;
+                            if (FileOrFolder.Text == "Folder" && !Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+                            else if (FileOrFolder.Text == "File" && !File.Exists(path))
+                            {
+                                var my_file = File.Create(path);
+                                my_file.Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("NAME IS TAKEN", "",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                int i = 1;
+                                string temp = CreateName.Text;
+                                while (true)
+                                {
+                                    if (FileOrFolder.Text == "Folder")
+                                    {
+                                        CreateName.Text = temp + i;
+                                    }
+                                    else
+                                    {
+                                        CreateName.Text = temp.Insert(temp.LastIndexOf("."), i.ToString());
+                                    }
+
+                                    if (ToPath.Text.EndsWith("\\")) path = ToPath.Text + CreateName.Text;
+                                    else path = ToPath.Text + '\\' + CreateName.Text;
+                                    if (FileOrFolder.Text == "Folder" && !Directory.Exists(path)) return;
+                                    else if (FileOrFolder.Text == "File" && !File.Exists(path)) return;
+
+                                    i++;
+                                }
+                            }
+                            Refresh();
+                            ToExplorer.SetSelected(ToExplorer.FindString(CreateName.Text), true);
+                            break;
+                    }
                 }
             }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
 
         }
 
@@ -411,9 +412,14 @@ namespace FileExplorer
             }
             else
             {
-                FileOrFolder.Visible = false;
-                FileOrFolder.Enabled = false;
+                CreateName.Visible = false;
+                CreateName.Enabled = false;
             }
+        }
+        private void FileOrFolder_EnabledChanged(object sender, EventArgs e)
+        {
+            if((sender as ComboBox).Enabled)
+                FileOrFolder_SelectedIndexChanged(sender,e);
         }
     }
 }
