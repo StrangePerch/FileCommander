@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,7 +16,7 @@ namespace FileExplorer
 {
     public partial class Form1 : Form
     {
-
+        private FileInfo FileRename;
 
         public Form1()
         {
@@ -31,51 +32,93 @@ namespace FileExplorer
             WindowResized(this,null);
         }
 
-        private void Open(CheckedListBox obj, string path)
+        private void Open(DataGridView Explorer, string path)
         {
-            bool isFile;
-            isFile = File.Exists(path);
+            ComboBox Path;
+            if (Explorer == LeftExplorer)
+                Path = LeftPath;
+            else
+                Path = RightPath;
 
-            if (isFile)
+            if (File.Exists(path))
             {
                 Process.Start(path);
                 return;
             }
 
-
-            if (obj == LeftExplorer)
+            Explorer.Rows.Clear();
+            if (Directory.Exists(path))
             {
-                LeftPath.Items.Clear();
-                LeftPath.Items.AddRange(Directory.GetDirectories(path));
-                LeftPath.Text = path;
-            }
-            else
-            {
-                RightPath.Items.Clear();
-                RightPath.Items.AddRange(Directory.GetDirectories(path));
-                RightPath.Text = path;
+                DirectoryInfo a = new DirectoryInfo(path);
+                foreach (var dir in a.GetDirectories())
+                {
+                    Explorer.Rows.Add(dir.Name, dir.LastWriteTime, "", "");
+                }
+
+                foreach (var file in a.GetFiles())
+                {
+                    Explorer.Rows.Add(
+                        file.Name.Substring(0,file.Name.LastIndexOf(file.Extension)),
+                        file.LastWriteTime,
+                        file.Extension, 
+                        file.Length.ToString("N0") + " B");
+                }
             }
 
-            obj.Items.Clear();
+            Path.Text = path;
 
             string[] dirs = Directory.GetDirectories(path);
             string[] files = Directory.GetFiles(path);
 
-            foreach (var dir in dirs)
-            {
-                obj.Items.Add(dir.Substring(dir.LastIndexOf('\\') + 1));
-            }
 
-            foreach (var file in files)
-            {
-                obj.Items.Add(file.Substring(file.LastIndexOf('\\') + 1));
-            }
-
-            if(dirs.Length > 0)
-             obj.SelectedIndex = 0;
         }
 
-        private void Exit(CheckedListBox obj)
+        //OLD
+        //private void Open(CheckedListBox obj, string path)
+        //{
+        //    bool isFile;
+        //    isFile = File.Exists(path);
+
+        //    if (isFile)
+        //    {
+        //        Process.Start(path);
+        //        return;
+        //    }
+
+
+        //    if (obj == LeftExplorer)
+        //    {
+        //        LeftPath.Items.Clear();
+        //        LeftPath.Items.AddRange(Directory.GetDirectories(path));
+        //        LeftPath.Text = path;
+        //    }
+        //    else
+        //    {
+        //        RightPath.Items.Clear();
+        //        RightPath.Items.AddRange(Directory.GetDirectories(path));
+        //        RightPath.Text = path;
+        //    }
+
+        //    obj.Items.Clear();
+
+        //    string[] dirs = Directory.GetDirectories(path);
+        //    string[] files = Directory.GetFiles(path);
+
+        //    foreach (var dir in dirs)
+        //    {
+        //        obj.Items.Add(dir.Substring(dir.LastIndexOf('\\') + 1));
+        //    }
+
+        //    foreach (var file in files)
+        //    {
+        //        obj.Items.Add(file.Substring(file.LastIndexOf('\\') + 1));
+        //    }
+
+        //    if (dirs.Length > 0)
+        //     obj.SelectedIndex = 0;
+        //}
+
+        private void Exit(DataGridView obj)
         {
             var file = obj == LeftExplorer ? LeftPath.Text : RightPath.Text;
             if (file.Length == 0) return;
@@ -88,10 +131,17 @@ namespace FileExplorer
             if (((sender as ComboBox).SelectedItem as DriveInfo).IsReady)
             {
                 string file = (sender as ComboBox).SelectedItem.ToString();
-                if((sender as ComboBox) == LeftDrive)
+                if ((sender as ComboBox) == LeftDrive)
+                {
                     Open(LeftExplorer, file);
+                    Open(LeftExplorer, file);
+                }
                 else
-                    Open(RightExplorer,file);
+                {
+                    Open(RightExplorer, file);
+                }
+
+                
             }
             else
             {
@@ -107,19 +157,6 @@ namespace FileExplorer
             if (checkedListBox.Items.Count == 0 || checkedListBox.SelectedIndex == -1) return;
             if (e.X > 13)
                 checkedListBox.SetItemChecked(checkedListBox.SelectedIndex, !checkedListBox.GetItemChecked(checkedListBox.SelectedIndex));
-        }
-
-        private void ExplorerButtonDown(object sender, KeyEventArgs e)
-        {
-            if (!(sender is CheckedListBox checkedListBox)) return;
-            if (checkedListBox.Items.Count == 0 || checkedListBox.SelectedIndex == -1) return;
-            if (e.KeyData == Keys.Enter) 
-                if(LeftPath.Text.Length == 3)
-                    Open(checkedListBox, LeftPath.Text + checkedListBox.SelectedItem.ToString());
-                else
-                    Open(checkedListBox, LeftPath.Text + '\\' + checkedListBox.SelectedItem.ToString());
-            else if (e.KeyData == Keys.Escape)
-                Exit(checkedListBox);
         }
 
         private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
@@ -160,7 +197,7 @@ namespace FileExplorer
 
         private void Refresh()
         {
-            if(Directory.Exists(LeftPath.Text))
+            if (Directory.Exists(LeftPath.Text))
                 Open(LeftExplorer, LeftPath.Text);
             if (Directory.Exists(RightPath.Text))
                 Open(RightExplorer, RightPath.Text);
@@ -170,8 +207,8 @@ namespace FileExplorer
         {
             try
             {
-                CheckedListBox FromExplorer;
-                CheckedListBox ToExplorer;
+                DataGridView FromExplorer;
+                DataGridView ToExplorer;
                 ComboBox FromPath;
                 ComboBox ToPath;
                 if ((sender as Button) == button_left)
@@ -193,8 +230,9 @@ namespace FileExplorer
                     switch (action.SelectedItem)
                     {
                         case "MOVE":
-                            foreach (string name in FromExplorer.CheckedItems)
+                            foreach (DataGridViewRow row in FromExplorer.SelectedRows)
                             {
+                                string name = row.Cells[0].Value.ToString() + row.Cells[2].Value.ToString();
                                 string from;
                                 if (ToPath.Text.EndsWith("\\"))
                                     from = FromPath.Text + name;
@@ -226,8 +264,9 @@ namespace FileExplorer
                             Refresh();
                             break;
                         case "COPY":
-                            foreach (string name in FromExplorer.CheckedItems)
+                            foreach (DataGridViewRow row in FromExplorer.SelectedRows)
                             {
+                                string name = row.Cells[0].Value.ToString() + row.Cells[2].Value.ToString();
                                 string from;
                                 if (FromPath.Text.EndsWith("\\"))
                                     from = FromPath.Text + name;
@@ -260,8 +299,9 @@ namespace FileExplorer
                             break;
                         case "DELETE":
                             List<string> toDel = new List<string>();
-                            foreach (string name in ToExplorer.CheckedItems)
+                            foreach (DataGridViewRow row in ToExplorer.SelectedRows)
                             {
+                                string name = row.Cells[0].Value.ToString() + row.Cells[2].Value.ToString();
                                 if (ToPath.Text.EndsWith("\\"))
                                     toDel.Add(ToPath.Text + name);
                                 else
@@ -343,7 +383,6 @@ namespace FileExplorer
                                 }
                             }
                             Refresh();
-                            ToExplorer.SetSelected(ToExplorer.FindString(CreateName.Text), true);
                             break;
                     }
                 }
@@ -372,18 +411,6 @@ namespace FileExplorer
                 Open(LeftExplorer, (sender as ComboBox).Text);
             else
                 Open(RightExplorer, (sender as ComboBox).Text);
-        }
-
-        private void ExplorerDoubleClick(object sender, MouseEventArgs e)
-        {
-            if (!(sender is CheckedListBox checkedListBox)) return;
-            if (checkedListBox.Items.Count == 0 || checkedListBox.SelectedIndex == -1) return;
-            var Path = checkedListBox == LeftExplorer ? LeftPath : RightPath;
-            if (Path.Text.Length == 3)
-                Open(checkedListBox, Path.Text + checkedListBox.SelectedItem.ToString());
-            else
-                Open(checkedListBox, Path.Text + '\\' + checkedListBox.SelectedItem.ToString());
-
         }
 
         private void action_SelectedIndexChanged(object sender, EventArgs e)
@@ -446,6 +473,79 @@ namespace FileExplorer
             LeftDrive.Left = LeftExplorer.Left + LeftExplorer.Width - LeftDrive.Width;
             RightDrive.Left = RightExplorer.Left + RightExplorer.Width - RightDrive.Width;
 
+        }
+
+        private void ExplorerOpen(object Explorer, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                ComboBox Path;
+                if (Explorer == LeftExplorer)
+                    Path = LeftPath;
+                else
+                    Path = RightPath;
+
+                string name = (Explorer as DataGridView)?.Rows[e.RowIndex].Cells[0].Value.ToString();
+                string extension = (Explorer as DataGridView)?.Rows[e.RowIndex].Cells[2].Value.ToString();
+                string path;
+                if (Path.Text.EndsWith("\\"))
+                    path = Path.Text + name;
+                else
+                    path = Path.Text + '\\' + name;
+                Open(Explorer as DataGridView, path + extension);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RenameEnd(object Explorer, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                ComboBox Path;
+                if (Explorer == LeftExplorer)
+                    Path = LeftPath;
+                else
+                    Path = RightPath;
+
+                string name = (Explorer as DataGridView)?.Rows[e.RowIndex].Cells[0].Value.ToString();
+                string path;
+                if (Path.Text.EndsWith("\\"))
+                    path = Path.Text + name;
+                else
+                    path = Path.Text + '\\' + name;
+                if ((FileRename.Attributes & FileAttributes.Directory) == 0)
+                    path += FileRename.Extension;
+                FileRename.MoveTo(path);
+                BeginInvoke(new MethodInvoker(Refresh));
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                BeginInvoke(new MethodInvoker(Refresh));    
+            }
+        }
+
+        private void RenameBegin(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            try
+            {
+                string name = LeftExplorer.Rows[e.RowIndex].Cells[0].Value.ToString();
+                string extension = LeftExplorer.Rows[e.RowIndex].Cells[2].Value.ToString();
+                string path;
+                if (LeftPath.Text.EndsWith("\\"))
+                    path = LeftPath.Text + name;
+                else
+                    path = LeftPath.Text + '\\' + name;
+
+                FileRename = new FileInfo(path + extension);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
