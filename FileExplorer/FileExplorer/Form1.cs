@@ -666,5 +666,30 @@ namespace FileExplorer
             writer.WriteLine($"{LeftExplorer.RowHeadersWidth} {RightExplorer.RowHeadersWidth}");
             writer.Close();
         }
+
+        private void KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.F1:
+                    Copy(CopyButton, null);
+                    break;
+                case Keys.F2:
+                    Copy(MoveButton, null);
+                    break;
+                case Keys.F3:
+                    Swap(SwapButton, null);
+                    break;
+                case Keys.F4:
+                    Remove(RemoveButton, null);
+                    break;
+                case Keys.F5:
+                    CreateDir(CreateDirButton, null);
+                    break;
+                case Keys.F6:
+                    CreateTXT(CreateTXTButton, null);
+                    break;
+            }
+        }
     }
 }

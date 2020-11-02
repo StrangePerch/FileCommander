@@ -131,6 +131,7 @@
             this.LeftExplorer.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.RenameEnd);
             this.LeftExplorer.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ExplorerOpen);
             this.LeftExplorer.Click += new System.EventHandler(this.Focus);
+            this.LeftExplorer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyDown);
             // 
             // LeftExplorerNameCollum
             // 
@@ -174,6 +175,7 @@
             this.RightExplorer.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.RenameEnd);
             this.RightExplorer.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ExplorerOpen);
             this.RightExplorer.Click += new System.EventHandler(this.Focus);
+            this.RightExplorer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyDown);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -217,7 +219,7 @@
             this.tableLayoutPanel1.Controls.Add(this.MoveButton, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.CopyButton, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 531);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 414);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -370,7 +372,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(925, 582);
+            this.ClientSize = new System.Drawing.Size(925, 465);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.RightPath);
             this.Controls.Add(this.LeftPath);
