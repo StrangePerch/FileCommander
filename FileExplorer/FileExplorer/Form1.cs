@@ -41,8 +41,6 @@ namespace FileExplorer
 
         private void Open(DataGridView Explorer, string path)
         {
-            if (AutoResize) ColumnsDefault(null, null);
-
             TextBox Path;
             if (Explorer == LeftExplorer)
                 Path = LeftPath;
@@ -81,7 +79,7 @@ namespace FileExplorer
             string[] dirs = Directory.GetDirectories(path);
             string[] files = Directory.GetFiles(path);
 
-
+            if (AutoResize) ColumnsDefault(null, null);
         }
 
         private void Exit(DataGridView obj)
@@ -398,9 +396,9 @@ namespace FileExplorer
             string path;
             string name = "New Text Document";
             if (Path.Text.EndsWith("\\"))
-                path = Path.Text + name;
+                path = Path.Text + name + ".txt";
             else
-                path = Path.Text + '\\' + name;
+                path = Path.Text + '\\' + name + ".txt";
 
             if (File.Exists(path) || Directory.Exists(path))
             {
