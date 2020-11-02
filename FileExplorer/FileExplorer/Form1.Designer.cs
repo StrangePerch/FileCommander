@@ -28,17 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.LeftDrive = new System.Windows.Forms.ComboBox();
             this.RightDrive = new System.Windows.Forms.ComboBox();
-            this.action = new System.Windows.Forms.ComboBox();
-            this.button_left = new System.Windows.Forms.Button();
-            this.button_right = new System.Windows.Forms.Button();
-            this.LeftPath = new System.Windows.Forms.ComboBox();
             this.LeftExit = new System.Windows.Forms.Button();
-            this.RightPath = new System.Windows.Forms.ComboBox();
             this.RightExit = new System.Windows.Forms.Button();
-            this.CreateName = new System.Windows.Forms.TextBox();
-            this.FileOrFolder = new System.Windows.Forms.ComboBox();
             this.LeftExplorer = new System.Windows.Forms.DataGridView();
             this.LeftExplorerNameCollum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LeftExplorerDateModifiedCollum = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,8 +43,23 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ExitButton = new System.Windows.Forms.Button();
+            this.CreateTXTButton = new System.Windows.Forms.Button();
+            this.CreateDirButton = new System.Windows.Forms.Button();
+            this.RemoveButton = new System.Windows.Forms.Button();
+            this.SwapButton = new System.Windows.Forms.Button();
+            this.MoveButton = new System.Windows.Forms.Button();
+            this.CopyButton = new System.Windows.Forms.Button();
+            this.LeftPath = new System.Windows.Forms.TextBox();
+            this.RightPath = new System.Windows.Forms.TextBox();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.LeftExplorer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RightExplorer)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // LeftDrive
@@ -80,59 +89,6 @@
             this.RightDrive.Text = "ChooseDrive";
             this.RightDrive.SelectedIndexChanged += new System.EventHandler(this.DriveSelected);
             // 
-            // action
-            // 
-            this.action.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.action.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.action.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.action.FormattingEnabled = true;
-            this.action.Items.AddRange(new object[] {
-            "COPY",
-            "MOVE",
-            "CREATE",
-            "DELETE"});
-            this.action.Location = new System.Drawing.Point(422, 129);
-            this.action.Name = "action";
-            this.action.Size = new System.Drawing.Size(72, 21);
-            this.action.TabIndex = 4;
-            this.action.SelectedIndexChanged += new System.EventHandler(this.action_SelectedIndexChanged);
-            // 
-            // button_left
-            // 
-            this.button_left.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_left.Location = new System.Drawing.Point(422, 177);
-            this.button_left.Name = "button_left";
-            this.button_left.Size = new System.Drawing.Size(75, 23);
-            this.button_left.TabIndex = 5;
-            this.button_left.Text = "<===";
-            this.button_left.UseVisualStyleBackColor = true;
-            this.button_left.Click += new System.EventHandler(this.Action);
-            // 
-            // button_right
-            // 
-            this.button_right.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.button_right.Location = new System.Drawing.Point(422, 227);
-            this.button_right.Name = "button_right";
-            this.button_right.Size = new System.Drawing.Size(75, 23);
-            this.button_right.TabIndex = 6;
-            this.button_right.Text = "===>";
-            this.button_right.UseVisualStyleBackColor = true;
-            this.button_right.Click += new System.EventHandler(this.Action);
-            // 
-            // LeftPath
-            // 
-            this.LeftPath.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.LeftPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.LeftPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.LeftPath.FormattingEnabled = true;
-            this.LeftPath.Location = new System.Drawing.Point(34, 66);
-            this.LeftPath.Name = "LeftPath";
-            this.LeftPath.Size = new System.Drawing.Size(271, 21);
-            this.LeftPath.TabIndex = 7;
-            this.LeftPath.SelectedIndexChanged += new System.EventHandler(this.PathChanged);
-            this.LeftPath.Click += new System.EventHandler(this.Up);
-            this.LeftPath.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FilePathKeyDown);
-            // 
             // LeftExit
             // 
             this.LeftExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -145,19 +101,6 @@
             this.LeftExit.UseVisualStyleBackColor = true;
             this.LeftExit.Click += new System.EventHandler(this.Up);
             // 
-            // RightPath
-            // 
-            this.RightPath.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.RightPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.RightPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.RightPath.FormattingEnabled = true;
-            this.RightPath.Location = new System.Drawing.Point(642, 66);
-            this.RightPath.Name = "RightPath";
-            this.RightPath.Size = new System.Drawing.Size(271, 21);
-            this.RightPath.TabIndex = 9;
-            this.RightPath.SelectedIndexChanged += new System.EventHandler(this.PathChanged);
-            this.RightPath.Click += new System.EventHandler(this.Up);
-            // 
             // RightExit
             // 
             this.RightExit.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -169,33 +112,6 @@
             this.RightExit.Text = "🠕";
             this.RightExit.UseVisualStyleBackColor = true;
             this.RightExit.Click += new System.EventHandler(this.Up);
-            // 
-            // CreateName
-            // 
-            this.CreateName.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.CreateName.Enabled = false;
-            this.CreateName.Location = new System.Drawing.Point(422, 298);
-            this.CreateName.Name = "CreateName";
-            this.CreateName.Size = new System.Drawing.Size(75, 20);
-            this.CreateName.TabIndex = 11;
-            this.CreateName.Text = "NewFolder";
-            this.CreateName.Visible = false;
-            // 
-            // FileOrFolder
-            // 
-            this.FileOrFolder.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.FileOrFolder.Enabled = false;
-            this.FileOrFolder.FormattingEnabled = true;
-            this.FileOrFolder.Items.AddRange(new object[] {
-            "Folder",
-            "File"});
-            this.FileOrFolder.Location = new System.Drawing.Point(422, 266);
-            this.FileOrFolder.Name = "FileOrFolder";
-            this.FileOrFolder.Size = new System.Drawing.Size(75, 21);
-            this.FileOrFolder.TabIndex = 12;
-            this.FileOrFolder.Visible = false;
-            this.FileOrFolder.SelectedIndexChanged += new System.EventHandler(this.FileOrFolder_SelectedIndexChanged);
-            this.FileOrFolder.EnabledChanged += new System.EventHandler(this.FileOrFolder_EnabledChanged);
             // 
             // LeftExplorer
             // 
@@ -214,6 +130,7 @@
             this.LeftExplorer.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.RenameBegin);
             this.LeftExplorer.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.RenameEnd);
             this.LeftExplorer.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ExplorerOpen);
+            this.LeftExplorer.Click += new System.EventHandler(this.Focus);
             // 
             // LeftExplorerNameCollum
             // 
@@ -231,6 +148,7 @@
             this.LeftExplorerTypeCollum.HeaderText = "Type";
             this.LeftExplorerTypeCollum.Name = "LeftExplorerTypeCollum";
             this.LeftExplorerTypeCollum.ReadOnly = true;
+            this.LeftExplorerTypeCollum.Width = 50;
             // 
             // LeftExplorerSizeCollum
             // 
@@ -247,7 +165,7 @@
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4});
-            this.RightExplorer.Location = new System.Drawing.Point(540, 93);
+            this.RightExplorer.Location = new System.Drawing.Point(531, 90);
             this.RightExplorer.Name = "RightExplorer";
             this.RightExplorer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.RightExplorer.Size = new System.Drawing.Size(373, 289);
@@ -255,11 +173,13 @@
             this.RightExplorer.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.RenameBegin);
             this.RightExplorer.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.RenameEnd);
             this.RightExplorer.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ExplorerOpen);
+            this.RightExplorer.Click += new System.EventHandler(this.Focus);
             // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "Name";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 50;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -279,29 +199,197 @@
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 7;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel1.Controls.Add(this.ExitButton, 6, 0);
+            this.tableLayoutPanel1.Controls.Add(this.CreateTXTButton, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.CreateDirButton, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.RemoveButton, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.SwapButton, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.MoveButton, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.CopyButton, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 531);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(925, 51);
+            this.tableLayoutPanel1.TabIndex = 24;
+            // 
+            // ExitButton
+            // 
+            this.ExitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ExitButton.Location = new System.Drawing.Point(795, 3);
+            this.ExitButton.Name = "ExitButton";
+            this.ExitButton.Size = new System.Drawing.Size(127, 45);
+            this.ExitButton.TabIndex = 6;
+            this.ExitButton.Text = "Exit (ALT + F4)";
+            this.ExitButton.UseVisualStyleBackColor = true;
+            this.ExitButton.Click += new System.EventHandler(this.Close);
+            // 
+            // CreateTXTButton
+            // 
+            this.CreateTXTButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CreateTXTButton.Location = new System.Drawing.Point(663, 3);
+            this.CreateTXTButton.Name = "CreateTXTButton";
+            this.CreateTXTButton.Size = new System.Drawing.Size(126, 45);
+            this.CreateTXTButton.TabIndex = 5;
+            this.CreateTXTButton.Text = "CreateTXT (F6)";
+            this.CreateTXTButton.UseVisualStyleBackColor = true;
+            this.CreateTXTButton.Click += new System.EventHandler(this.CreateTXT);
+            // 
+            // CreateDirButton
+            // 
+            this.CreateDirButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CreateDirButton.Location = new System.Drawing.Point(531, 3);
+            this.CreateDirButton.Name = "CreateDirButton";
+            this.CreateDirButton.Size = new System.Drawing.Size(126, 45);
+            this.CreateDirButton.TabIndex = 4;
+            this.CreateDirButton.Text = "CreateDir (F5)";
+            this.CreateDirButton.UseVisualStyleBackColor = true;
+            this.CreateDirButton.Click += new System.EventHandler(this.CreateDir);
+            // 
+            // RemoveButton
+            // 
+            this.RemoveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.RemoveButton.Location = new System.Drawing.Point(399, 3);
+            this.RemoveButton.Name = "RemoveButton";
+            this.RemoveButton.Size = new System.Drawing.Size(126, 45);
+            this.RemoveButton.TabIndex = 3;
+            this.RemoveButton.Text = "Remove (F4)";
+            this.RemoveButton.UseVisualStyleBackColor = true;
+            this.RemoveButton.Click += new System.EventHandler(this.Remove);
+            // 
+            // SwapButton
+            // 
+            this.SwapButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SwapButton.Location = new System.Drawing.Point(267, 3);
+            this.SwapButton.Name = "SwapButton";
+            this.SwapButton.Size = new System.Drawing.Size(126, 45);
+            this.SwapButton.TabIndex = 2;
+            this.SwapButton.Text = "Swap (F3)";
+            this.SwapButton.UseVisualStyleBackColor = true;
+            this.SwapButton.Click += new System.EventHandler(this.Swap);
+            // 
+            // MoveButton
+            // 
+            this.MoveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MoveButton.Location = new System.Drawing.Point(135, 3);
+            this.MoveButton.Name = "MoveButton";
+            this.MoveButton.Size = new System.Drawing.Size(126, 45);
+            this.MoveButton.TabIndex = 1;
+            this.MoveButton.Text = "Move (F2)";
+            this.MoveButton.UseVisualStyleBackColor = true;
+            this.MoveButton.Click += new System.EventHandler(this.Copy);
+            // 
+            // CopyButton
+            // 
+            this.CopyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CopyButton.Location = new System.Drawing.Point(3, 3);
+            this.CopyButton.Name = "CopyButton";
+            this.CopyButton.Size = new System.Drawing.Size(126, 45);
+            this.CopyButton.TabIndex = 0;
+            this.CopyButton.Text = "Copy (F1)";
+            this.CopyButton.UseVisualStyleBackColor = true;
+            this.CopyButton.Click += new System.EventHandler(this.Copy);
+            // 
+            // LeftPath
+            // 
+            this.LeftPath.Location = new System.Drawing.Point(34, 66);
+            this.LeftPath.Name = "LeftPath";
+            this.LeftPath.Size = new System.Drawing.Size(100, 20);
+            this.LeftPath.TabIndex = 25;
+            this.LeftPath.TextChanged += new System.EventHandler(this.PathChanged);
+            this.LeftPath.Enter += new System.EventHandler(this.Focus_Enter);
+            this.LeftPath.Leave += new System.EventHandler(this.Focus_Leave);
+            // 
+            // RightPath
+            // 
+            this.RightPath.Location = new System.Drawing.Point(635, 67);
+            this.RightPath.Name = "RightPath";
+            this.RightPath.Size = new System.Drawing.Size(100, 20);
+            this.RightPath.TabIndex = 26;
+            this.RightPath.TextChanged += new System.EventHandler(this.PathChanged);
+            this.RightPath.Enter += new System.EventHandler(this.Focus_Enter);
+            this.RightPath.Leave += new System.EventHandler(this.Focus_Leave);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripButton2});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(925, 25);
+            this.toolStrip1.TabIndex = 27;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(91, 22);
+            this.toolStripButton1.Text = "ResizeColumns";
+            this.toolStripButton1.Click += new System.EventHandler(this.ColumnsDefault);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(85, 22);
+            this.toolStripButton2.Text = "AutoResize";
+            this.toolStripButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripButton2.Click += new System.EventHandler(this.SetAutoResize);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(925, 464);
+            this.ClientSize = new System.Drawing.Size(925, 582);
+            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.RightPath);
+            this.Controls.Add(this.LeftPath);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.RightExplorer);
             this.Controls.Add(this.LeftExplorer);
-            this.Controls.Add(this.FileOrFolder);
-            this.Controls.Add(this.CreateName);
             this.Controls.Add(this.RightExit);
-            this.Controls.Add(this.RightPath);
             this.Controls.Add(this.LeftExit);
-            this.Controls.Add(this.LeftPath);
-            this.Controls.Add(this.button_right);
-            this.Controls.Add(this.button_left);
-            this.Controls.Add(this.action);
             this.Controls.Add(this.RightDrive);
             this.Controls.Add(this.LeftDrive);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnClose);
             this.Resize += new System.EventHandler(this.WindowResized);
             ((System.ComponentModel.ISupportInitialize)(this.LeftExplorer)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RightExplorer)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -311,25 +399,31 @@
 
         private System.Windows.Forms.ComboBox LeftDrive;
         private System.Windows.Forms.ComboBox RightDrive;
-        private System.Windows.Forms.ComboBox action;
-        private System.Windows.Forms.Button button_left;
-        private System.Windows.Forms.Button button_right;
-        private System.Windows.Forms.ComboBox LeftPath;
         private System.Windows.Forms.Button LeftExit;
-        private System.Windows.Forms.ComboBox RightPath;
         private System.Windows.Forms.Button RightExit;
-        private System.Windows.Forms.TextBox CreateName;
-        private System.Windows.Forms.ComboBox FileOrFolder;
         private System.Windows.Forms.DataGridView LeftExplorer;
+        private System.Windows.Forms.DataGridView RightExplorer;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Button ExitButton;
+        private System.Windows.Forms.Button CreateTXTButton;
+        private System.Windows.Forms.Button CreateDirButton;
+        private System.Windows.Forms.Button RemoveButton;
+        private System.Windows.Forms.Button SwapButton;
+        private System.Windows.Forms.Button MoveButton;
+        private System.Windows.Forms.Button CopyButton;
+        private System.Windows.Forms.TextBox LeftPath;
+        private System.Windows.Forms.TextBox RightPath;
         private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerNameCollum;
         private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerDateModifiedCollum;
         private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerTypeCollum;
         private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerSizeCollum;
-        private System.Windows.Forms.DataGridView RightExplorer;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }
 
