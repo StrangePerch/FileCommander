@@ -35,8 +35,10 @@ namespace FileExplorer
             RightDrive.Items.AddRange(drives);
 
             Load();
-            
-            WindowResized(this,null);
+
+            WindowResized(this, null);
+            pictureBox1.Visible = left;
+            pictureBox2.Visible = !left;
         }
 
         private void Open(DataGridView Explorer, string path)
@@ -195,6 +197,7 @@ namespace FileExplorer
             RightExplorer.Width = (int)(this.Size.Width / 2 - 50);
             LeftExplorer.Height = this.Size.Height - 200;
             RightExplorer.Height = this.Size.Height - 200;
+
             int x = 40;
             LeftExplorer.Left = x;
             RightExplorer.Left = this.Size.Width - x - 16 - RightExplorer.Width;
@@ -207,6 +210,15 @@ namespace FileExplorer
             LeftDrive.Left = LeftExplorer.Left + LeftExplorer.Width - LeftDrive.Width;
             RightDrive.Left = RightExplorer.Left + RightExplorer.Width - RightDrive.Width;
 
+            int w = 4;
+            pictureBox1.Height = LeftExplorer.Height + w * 2;
+            pictureBox1.Width = LeftExplorer.Width + w * 2;
+            pictureBox1.Left = LeftExplorer.Left - w;
+            pictureBox1.Top = LeftExplorer.Top - w;
+            pictureBox2.Height = RightExplorer.Height + w * 2;
+            pictureBox2.Width = RightExplorer.Width + w * 2;
+            pictureBox2.Left = RightExplorer.Left - w;
+            pictureBox2.Top = RightExplorer.Top - w;
         }
 
         private void ExplorerOpen(object Explorer, DataGridViewCellMouseEventArgs e)
@@ -532,6 +544,8 @@ namespace FileExplorer
         private void Focus(object sender, EventArgs e)
         {
             left = sender == LeftExplorer;
+            pictureBox1.Visible = left;
+            pictureBox2.Visible = !left;
         }
 
         private void Swap(object sender, EventArgs e)
@@ -596,6 +610,10 @@ namespace FileExplorer
         {
             LeftExplorer.AutoResizeColumns();
             RightExplorer.AutoResizeColumns();
+
+            LeftExplorer.RowHeadersWidth = 20;
+            RightExplorer.RowHeadersWidth = 20;
+
         }
 
         private void SetAutoResize(object sender, EventArgs e)
