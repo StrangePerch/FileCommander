@@ -626,6 +626,7 @@ namespace FileExplorer
             else
             {
                 button.Image = Image.FromFile("Enabled.png");
+                ColumnsDefault(toolStripButton1, null);
             }
             AutoResize = !AutoResize;
         }
