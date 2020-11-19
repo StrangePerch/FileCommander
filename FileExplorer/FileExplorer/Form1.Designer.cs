@@ -34,11 +34,13 @@
             this.LeftExit = new System.Windows.Forms.Button();
             this.RightExit = new System.Windows.Forms.Button();
             this.LeftExplorer = new System.Windows.Forms.DataGridView();
+            this.LeftExplorerIconCollum = new System.Windows.Forms.DataGridViewImageColumn();
             this.LeftExplorerNameCollum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LeftExplorerDateModifiedCollum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LeftExplorerTypeCollum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LeftExplorerSizeCollum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RightExplorer = new System.Windows.Forms.DataGridView();
+            this.RightExplorerIconCollum = new System.Windows.Forms.DataGridViewImageColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -58,6 +60,8 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.IconSizeTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.LeftExplorer)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RightExplorer)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -119,10 +123,13 @@
             // 
             // LeftExplorer
             // 
+            this.LeftExplorer.AllowDrop = true;
             this.LeftExplorer.AllowUserToAddRows = false;
+            this.LeftExplorer.AllowUserToDeleteRows = false;
             this.LeftExplorer.AllowUserToResizeRows = false;
             this.LeftExplorer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.LeftExplorer.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LeftExplorerIconCollum,
             this.LeftExplorerNameCollum,
             this.LeftExplorerDateModifiedCollum,
             this.LeftExplorerTypeCollum,
@@ -136,7 +143,18 @@
             this.LeftExplorer.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.RenameEnd);
             this.LeftExplorer.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ExplorerOpen);
             this.LeftExplorer.Click += new System.EventHandler(this.Focus);
+            this.LeftExplorer.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDrop);
+            this.LeftExplorer.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnter);
+            this.LeftExplorer.DragOver += new System.Windows.Forms.DragEventHandler(this.DragOver);
             this.LeftExplorer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyDown);
+            this.LeftExplorer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseDown);
+            this.LeftExplorer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseMove);
+            this.LeftExplorer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MouseUp);
+            // 
+            // LeftExplorerIconCollum
+            // 
+            this.LeftExplorerIconCollum.HeaderText = "Icon";
+            this.LeftExplorerIconCollum.Name = "LeftExplorerIconCollum";
             // 
             // LeftExplorerNameCollum
             // 
@@ -164,10 +182,13 @@
             // 
             // RightExplorer
             // 
+            this.RightExplorer.AllowDrop = true;
             this.RightExplorer.AllowUserToAddRows = false;
+            this.RightExplorer.AllowUserToDeleteRows = false;
             this.RightExplorer.AllowUserToResizeRows = false;
             this.RightExplorer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.RightExplorer.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.RightExplorerIconCollum,
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3,
@@ -181,7 +202,18 @@
             this.RightExplorer.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.RenameEnd);
             this.RightExplorer.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ExplorerOpen);
             this.RightExplorer.Click += new System.EventHandler(this.Focus);
+            this.RightExplorer.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDrop);
+            this.RightExplorer.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnter);
+            this.RightExplorer.DragOver += new System.Windows.Forms.DragEventHandler(this.DragOver);
             this.RightExplorer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyDown);
+            this.RightExplorer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseDown);
+            this.RightExplorer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseMove);
+            this.RightExplorer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MouseUp);
+            // 
+            // RightExplorerIconCollum
+            // 
+            this.RightExplorerIconCollum.HeaderText = "Icon";
+            this.RightExplorerIconCollum.Name = "RightExplorerIconCollum";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -347,7 +379,9 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripButton2,
+            this.toolStripLabel1,
+            this.IconSizeTextBox});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(925, 25);
@@ -391,6 +425,21 @@
             this.pictureBox2.Size = new System.Drawing.Size(377, 293);
             this.pictureBox2.TabIndex = 29;
             this.pictureBox2.TabStop = false;
+            // 
+            // IconSizeTextBox
+            // 
+            this.IconSizeTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.IconSizeTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.IconSizeTextBox.Name = "IconSizeTextBox";
+            this.IconSizeTextBox.Size = new System.Drawing.Size(25, 25);
+            this.IconSizeTextBox.Text = "20";
+            this.IconSizeTextBox.TextChanged += new System.EventHandler(this.IconSizeChanged);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(53, 22);
+            this.toolStripLabel1.Text = "Icon Size";
             // 
             // Form1
             // 
@@ -444,19 +493,23 @@
         private System.Windows.Forms.Button CopyButton;
         private System.Windows.Forms.TextBox LeftPath;
         private System.Windows.Forms.TextBox RightPath;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerNameCollum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerDateModifiedCollum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerTypeCollum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerSizeCollum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.DataGridViewImageColumn LeftExplorerIconCollum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerNameCollum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerDateModifiedCollum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerTypeCollum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LeftExplorerSizeCollum;
+        private System.Windows.Forms.DataGridViewImageColumn RightExplorerIconCollum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripTextBox IconSizeTextBox;
     }
 }
 

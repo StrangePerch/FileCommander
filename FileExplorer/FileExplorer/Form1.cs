@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,6 +24,8 @@ namespace FileExplorer
         private string RBuffer;
         private bool left;
         private bool rename;
+        private bool Drag = false;
+        private Point DragStart;
 
         public Form1()
         {
@@ -41,6 +45,31 @@ namespace FileExplorer
             pictureBox2.Visible = !left;
         }
 
+        public static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
+        }
+
         private void Open(DataGridView Explorer, string path)
         {
             TextBox Path;
@@ -58,15 +87,22 @@ namespace FileExplorer
             Explorer.Rows.Clear();
             if (Directory.Exists(path))
             {
+                if (!int.TryParse(IconSizeTextBox.Text, out int wh)) wh = 20;
+                if (wh < 5) wh = 5;
                 DirectoryInfo a = new DirectoryInfo(path);
+                Bitmap icon = new Bitmap("DirIcon.png");
+                icon = ResizeImage(icon, wh, wh);
                 foreach (var dir in a.GetDirectories())
                 {
-                    Explorer.Rows.Add(dir.Name, dir.LastWriteTime, "", "");
+                    Explorer.Rows.Add(icon, dir.Name, dir.LastWriteTime, "", "");
                 }
 
                 foreach (var file in a.GetFiles())
-                {
+                { 
+                    icon = System.Drawing.Icon.ExtractAssociatedIcon(file.FullName).ToBitmap();
+                    icon = ResizeImage(icon, wh, wh);
                     Explorer.Rows.Add(
+                        icon,
                         file.Name.Substring(0,file.Name.LastIndexOf(file.Extension)),
                         file.LastWriteTime,
                         file.Extension, 
@@ -231,8 +267,8 @@ namespace FileExplorer
                 else
                     Path = RightPath;
 
-                string name = (Explorer as DataGridView)?.Rows[e.RowIndex].Cells[0].Value.ToString();
-                string extension = (Explorer as DataGridView)?.Rows[e.RowIndex].Cells[2].Value.ToString();
+                string name = (Explorer as DataGridView)?.Rows[e.RowIndex].Cells[1].Value.ToString();
+                string extension = (Explorer as DataGridView)?.Rows[e.RowIndex].Cells[3].Value.ToString();
                 string path;
                 if (Path.Text.EndsWith("\\"))
                     path = Path.Text + name;
@@ -256,7 +292,7 @@ namespace FileExplorer
                 else
                     Path = RightPath;
 
-                string name = (Explorer as DataGridView)?.Rows[e.RowIndex].Cells[0].Value.ToString();
+                string name = (Explorer as DataGridView)?.Rows[e.RowIndex].Cells[1].Value.ToString();
                 string path;
                 if (Path.Text.EndsWith("\\"))
                     path = Path.Text + name;
@@ -287,8 +323,8 @@ namespace FileExplorer
                 else
                     Path = RightPath;
 
-                string name = Explorer.Rows[e.RowIndex].Cells[0].Value.ToString();
-                string extension = Explorer.Rows[e.RowIndex].Cells[2].Value.ToString();
+                string name = Explorer.Rows[e.RowIndex].Cells[1].Value.ToString();
+                string extension = Explorer.Rows[e.RowIndex].Cells[3].Value.ToString();
                 string path;
                 if (Path.Text.EndsWith("\\"))
                     path = Path.Text + name;
@@ -347,7 +383,7 @@ namespace FileExplorer
             List<string> toDel = new List<string>();
             foreach (DataGridViewRow row in Explorer.SelectedRows)
             {
-                string name = row.Cells[0].Value.ToString() + row.Cells[2].Value.ToString();
+                string name = row.Cells[1].Value.ToString() + row.Cells[3].Value.ToString();
                 if (Path.Text.EndsWith("\\"))
                     toDel.Add(Path.Text + name);
                 else
@@ -497,7 +533,7 @@ namespace FileExplorer
 
                 foreach (DataGridViewRow row in FromExplorer.SelectedRows)
                 {
-                    string name = row.Cells[0].Value.ToString() + row.Cells[2].Value.ToString();
+                    string name = row.Cells[1].Value.ToString() + row.Cells[3].Value.ToString();
                     string from;
                     if (FromPath.Text.EndsWith("\\"))
                         from = FromPath.Text + name;
@@ -555,7 +591,7 @@ namespace FileExplorer
                 List<FileInfo> LFiles = new List<FileInfo>();
                 foreach (DataGridViewRow row in LeftExplorer.SelectedRows)
                 {
-                    string name = row.Cells[0].Value.ToString() + row.Cells[2].Value.ToString();
+                    string name = row.Cells[1].Value.ToString() + row.Cells[3].Value.ToString();
                     if (LeftPath.Text.EndsWith("\\")) name = LeftPath.Text + name;
                     else name = LeftPath.Text + "\\" + name;
                     LFiles.Add(new FileInfo(name));
@@ -565,7 +601,7 @@ namespace FileExplorer
 
                 foreach (DataGridViewRow row in RightExplorer.SelectedRows)
                 {
-                    string name = row.Cells[0].Value.ToString() + row.Cells[2].Value.ToString();
+                    string name = row.Cells[1].Value.ToString() + row.Cells[3].Value.ToString();
                     if (RightPath.Text.EndsWith("\\")) name = RightPath.Text + name;
                     else name = RightPath.Text + "\\" + name;
                     RFiles.Add(new FileInfo(name));
@@ -709,6 +745,68 @@ namespace FileExplorer
                     CreateTXT(CreateTXTButton, null);
                     break;
             }
+        }
+
+        private void MouseDown(object sender, MouseEventArgs e)
+        {
+            Drag = true;
+            DragStart = e.Location;
+            DataGridView explorer = sender as DataGridView;
+            explorer.AllowDrop = false;
+        }
+
+        private void MouseUp(object sender, MouseEventArgs e)
+        {
+            Drag = false;
+            LeftExplorer.AllowDrop = true;
+            RightExplorer.AllowDrop = true;
+        }
+
+        private void MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Y > 20 && Drag && Math.Abs(DragStart.X - e.X) + Math.Abs(DragStart.Y - e.Y) > 3)
+            {
+                DataGridView explorer = sender as DataGridView;
+                if (explorer == null) return;
+                explorer.DoDragDrop(explorer.Text, DragDropEffects.All);
+                Drag = false;
+            }
+        }
+
+        private void DragDrop(object sender, DragEventArgs e)
+        {
+            DataGridView to = sender as DataGridView;
+            left = to == RightExplorer;
+                if (e.Effect == DragDropEffects.Copy)
+                Copy(CopyButton, null);
+            else
+                Copy(MoveButton, null);
+            
+        }
+
+        private void DragEnter(object sender, DragEventArgs e)
+        {
+            if (ModifierKeys == Keys.Control)
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.Move;
+        }
+
+        private void DragOver(object sender, DragEventArgs e)
+        {
+            if ((e.KeyState & 8) == 8 && (e.AllowedEffect & DragDropEffects.Copy) == DragDropEffects.Copy)
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+        }
+
+        private void IconSizeChanged(object sender, EventArgs e)
+        {
+            Refresh();
         }
     }
 }
